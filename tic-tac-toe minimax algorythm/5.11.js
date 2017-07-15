@@ -10,7 +10,7 @@ const calculateUtility = state => {
   let utility = null
   let sum
 
-  const isTerminalState = sum => {
+  const checkSum = sum => {
     if (sum === 3) {
       utility = 1
     } else if (sum === 0) {
@@ -20,18 +20,18 @@ const calculateUtility = state => {
 
   //by rows
   for (let i = 0; i < 3 && utility === null; i++) {
-    isTerminalState(state[i * 3] + state[i * 3 + 1] + state[i * 3 + 2])
+    checkSum(state[i * 3] + state[i * 3 + 1] + state[i * 3 + 2])
   }
   //by columns
   for (let i = 0; i < 3 && utility === null; i++) {
-    isTerminalState(state[i] + state[i + 3] + state[i + 6])
+    checkSum(state[i] + state[i + 3] + state[i + 6])
   }
   //by diagonals
   if (utility === null) {
-    isTerminalState(state[0] + state[4] + state[8])
+    checkSum(state[0] + state[4] + state[8])
   }
   if (utility === null) {
-    isTerminalState(state[2] + state[4] + state[6])
+    checkSum(state[2] + state[4] + state[6])
   }
 
   if (filledCellsNum === 9 && utility === null) {
@@ -49,8 +49,8 @@ const doAction = (state, action) => {
 }
 
 
-const getNextBestNodeByMiniMax = CurrentState => {
-  const state = [...CurrentState]
+const getNextBestNodeByMiniMax = currentState => {
+  const state = [...currentState]
 
   const emptyCells = state.reduce((acc, cellValue, idx) => {
     if (cellValue === 'empty')
